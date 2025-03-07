@@ -38,7 +38,7 @@ class S3Collector:
 
             return {
                 "Bucket Name": bucket.name,
-                "Creation Date": bucket.creation_date,
+                "Creation Date": creation_date,
                 "Number of Files": bucket.file_count(),
                 "Total Size (MB)": bucket.total_size_in_mb(),
                 "Last Modified Date": bucket.last_modified(),
@@ -52,10 +52,16 @@ class S3Collector:
 
     def _get_bucket_creation_date(self):
         """
-        Fetches the bucket creation date.
+        Fetches the actual creation date of the bucket.
         """
-        response = self.s3_client.get_bucket_location(Bucket=self.bucket_name)
-        return response.get('ResponseMetadata', {}).get('HTTPHeaders', {}).get('date', None)
+        try:
+            response = self.s3_client.list_buckets()
+            for bucket in response.get('Buckets', []):
+                if bucket['Name'] == self.bucket_name:
+                    return bucket['CreationDate'].strftime('%B %d, %Y, %H:%M:%S (UTC)')
+        except (BotoCoreError, ClientError) as e:
+            logger.error(f"Error retrieving bucket creation date: {e}")
+        return "Unknown"
 
     def _get_bucket_files(self, storage_class_filter=None):
         """

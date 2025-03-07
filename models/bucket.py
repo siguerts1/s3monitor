@@ -1,12 +1,11 @@
 from dataclasses import dataclass
-from datetime import datetime
 from typing import List
 from models.bucketfile import BucketFile
 
 @dataclass
 class Bucket:
     name: str
-    creation_date: datetime
+    creation_date: str
     files: List[BucketFile]  # List of files in the bucket
 
     def file_count(self) -> int:
@@ -21,7 +20,7 @@ class Bucket:
         """Return the total size in MB."""
         return round(self.total_size() / (1024 * 1024), 2)
 
-    def last_modified(self) -> datetime:
+    def last_modified(self) -> str:
         """Return the last modified date of the most recent file."""
         return max((file.last_modified for file in self.files), default=None)
 
