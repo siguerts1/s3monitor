@@ -1,5 +1,4 @@
 import logging
-from datetime import datetime
 from botocore.exceptions import BotoCoreError, ClientError
 from models.bucket import Bucket
 from models.bucketfile import BucketFile
