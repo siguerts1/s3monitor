@@ -6,6 +6,7 @@ SIZE_UNITS = {
     "tb": 1024 ** 4
 }
 
+
 def process_bucket_info(info, size_unit):
     """
     Processes and prints bucket information with the appropriate size unit.
@@ -16,7 +17,7 @@ def process_bucket_info(info, size_unit):
     info["Total Size"] = round(info["Total Size (MB)"] * (1024 ** 2) / conversion_factor, 2)
     del info["Total Size (MB)"]
     info["Size Unit"] = size_unit.upper()
-    
+
     print("\nS3 Bucket Information:")
     for key, value in info.items():
         print(f"{key}: {value}")
