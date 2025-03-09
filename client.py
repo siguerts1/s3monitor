@@ -8,6 +8,7 @@ AWSHelper.check_aws_credentials()
 # Set up logging
 logger = logging.getLogger(__name__)
 
+
 class S3ClientInterface:
     def __init__(self, region_name='us-east-1'):
         """

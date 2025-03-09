@@ -1,6 +1,7 @@
 import boto3
 from botocore.exceptions import NoCredentialsError, PartialCredentialsError, ClientError
 
+
 class AWSHelper:
     def check_aws_credentials():
         """Check if AWS credentials are properly set up."""
@@ -10,10 +11,10 @@ class AWSHelper:
             print(f"✅ AWS Credentials OK - Account: {identity['Account']}")
             return True
         except NoCredentialsError:
-            print("❌ ERROR: No AWS credentials found. Please configure them using `aws configure` or environment variables.")
+            print("❌ ERROR: No credentials found. Configure using `aws configure` or env vars.")
         except PartialCredentialsError:
             print("❌ ERROR: Incomplete AWS credentials found. Check your configuration.")
         except ClientError as e:
             print(f"❌ ERROR: AWS authentication failed - {e}")
-        
+
         return False

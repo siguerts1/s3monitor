@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 
+
 @dataclass
 class BucketFile:
     key: str               # The file's key (path/name in S3)
