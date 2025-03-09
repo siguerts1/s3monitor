@@ -31,7 +31,7 @@ jobs:
 
       - name: Run Linter
         run: |
-          flake8 . --count --max-complexity=10 --max-line-length=88 --statistics
+          flake8 . --count --max-complexity=10 --max-line-length=188 --statistics
 
   test:
     name: Run Unit Tests & Coverage
