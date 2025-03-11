@@ -1,5 +1,6 @@
 import logging
 import click
+import botocore
 from s3collector import S3Collector
 from helpers.process_bucket_info import process_bucket_info
 
@@ -7,7 +8,7 @@ from helpers.process_bucket_info import process_bucket_info
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 
 SIZE_UNITS = {
     "bytes": 1,
@@ -46,8 +47,12 @@ def main(bucketname, region, size_unit, storage_class, version):
         print("\nS3 Bucket Information:")
         for bucket in buckets:
             bucket_name = bucket['Name']
-            bucket_region = s3_client.get_bucket_location(Bucket=bucket_name).get('LocationConstraint')
-            bucket_region = 'us-east-1' if bucket_region is None else bucket_region  # Handle AWS inconsistency
+
+            try:
+                bucket_region = s3_client.get_bucket_location(Bucket=bucket_name).get('LocationConstraint')
+                bucket_region = 'us-east-1' if bucket_region is None else bucket_region  # Handle AWS inconsistency
+            except botocore.exceptions.ClientError:
+                print("User is lacking IAM permissions")
 
             if region and bucket_region != region:
                 continue
