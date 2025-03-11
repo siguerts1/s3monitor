@@ -8,7 +8,7 @@ from helpers.process_bucket_info import process_bucket_info
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 
 SIZE_UNITS = {
     "bytes": 1,
